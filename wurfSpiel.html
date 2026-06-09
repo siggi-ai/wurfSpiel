@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Monstertreff</title>
-<!--     <link rel="stylesheet" href="style.css" /> -->
+    <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -34,26 +34,30 @@
       <main class="box">
         <!-- eingabefenster -->
         <dialog id="meinePromptBox">
-          <form method="dialog" id="meinFormular">
+          <form method="dialog" id="meinFormular" autocomplete="off">
             <p>
               Bitte geben Sie die Wurfgeschwindigkeit und den Wurfwinkel ein:
             </p>
             <input
-              type="text"
+              type="number"
               id="nutzerEingabe"
-              placeholder="Geschwindigkeit"
+              placeholder="Geschwindigkeit (max. 100)"
+              min="1"
+              max="100"
+              autocomplete="off"
               required
             />
             <input
-              type="text"
+              type="number"
               id="nutzerEingabe2"
-              placeholder="Winkel"
+              placeholder="Winkel (max 89) "
+              min="1"
+              max="89"
+              autocomplete="off"
               required
             />
             <div class="button-gruppe">
-              <button type="submit" value="cancel" id="btnAbbrechen">
-                Abbrechen
-              </button>
+              <button type="button" id="btnAbbrechen">Abbrechen</button>
               <button type="submit" value="default" id="btnOk">OK</button>
             </div>
           </form>
@@ -63,12 +67,7 @@
         <p id="ausgabeText" class="output"></p>
 
         <figure>
-          <img
-            src="monsters.jpg"
-            alt="a picture of a monsters in a group"
-            width="400"
-            height="400"
-          />
+          <img src="monsters.jpg" alt="a picture of a monsters in a group" />
           <figcaption>
             Illustration:
             <a
@@ -90,6 +89,7 @@
           const formular = document.getElementById("meinFormular");
           const dialog = document.getElementById("meinePromptBox");
           const oeffnenBtn = document.getElementById("oeffnenBtn");
+          const btnAbbrechen = document.getElementById("btnAbbrechen");
           const inputFeld = document.getElementById("nutzerEingabe");
           const inputFeld2 = document.getElementById("nutzerEingabe2");
           const ausgabe = document.getElementById("ausgabeText");
@@ -97,6 +97,10 @@
           var derWinkel = document.getElementById("nutzerEingabe2");
 
           let versuche = 3;
+
+          btnAbbrechen.addEventListener("click", () => {
+            dialog.close("cancel");
+          });
 
           inputFeld.addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
@@ -148,8 +152,7 @@
 
               if (versuche <= 0) {
                 alert("Das Monster schläft weiter!");
-                ausgabe.innerHTML +=
-                  "<br><b>Game Over! :(</b>";
+                ausgabe.innerHTML += "<br><b>Game Over! :(</b>";
 
                 oeffnenBtn.disabled = true;
                 restartBtn.style.display = "inline-block";
@@ -184,94 +187,3 @@
     </footer>
   </body>
 </html>
-
-<style>
-  html,
-body {
-  height: 100%;
-  background-color: rgb(183, 230, 176);
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    "Open Sans",
-    "Helvetica Neue",
-    sans-serif;
-}
-.site {
-  height: auto;
-  min-height: 100%;
-}
-main {
-  padding-bottom: 20px; /* Höhe des Footers */
-}
-.output {
-  color: chocolate;
-}
-footer {
-  margin-left: -15px;
-  height: 20px;
-  margin-top: -20px; /* Höhe des Footers */
-  color: rgb(135, 0, 165);
-  background-color: rgb(67, 156, 168);
-  font-size: small;
-}
-
-.box {
-  margin-left: 10%;
-  margin-top: 4%;
-  margin-bottom: -4%;
-}
-.title {
-  font-family: "Press Start 2P", system-ui;
-  font-size: 300%;
-  /*   color: rgb(0, 55, 66); */
-  color: chocolate;
-}
-p {
-  color: rgb(77, 77, 77);
-}
-dialog {
-  border: none;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  background-color: #f9f9f9;
-}
-
-dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.5); /* Hintergrund abdunkeln */
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  margin: 16px 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
-}
-
-.button-gruppe {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-}
-.simple {
-  font-family: "Press Start 2P", system-ui;
-  font-size: medium;
-}
-figure figcaption {
-  color: #555;
-  font-size: xx-small;
-}
-figure {
-  margin: 0; /* Entfernt den gesamten Standardabstand */
-  padding: 0;
-}
-</style>
