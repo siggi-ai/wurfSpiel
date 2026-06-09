@@ -3,20 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fallgeschwindigkeit</title>
+    <title>Monstertreff</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Jacquard+12&family=Rye&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rye&display=swap"
       rel="stylesheet"
     />
   </head>
 
   <!-- beginn body -->
+
   <body>
     <div class="site">
-      <header class="box"><h3>Hit It!</h3></header>
+      <header class="box">
+        <h3>Hit It!</h3>
+      </header>
 
       <main class="box">
         <p>
@@ -50,10 +53,19 @@
             </div>
           </form>
         </dialog>
-        <button id="oeffnenBtn">Fallhöhe</button>
+        <button id="oeffnenBtn">Start</button>
+        <button id="restartBtn" style="display:none">Neustart</button>
         <p id="ausgabeText" class="output"></p>
 
+        <img
+          src="monsters.jpg"
+          alt="a picture of a monsters in a group"
+          width="200"
+          height="200"
+        />
+
         <script>
+          const restartBtn = document.getElementById("restartBtn");
           const formular = document.getElementById("meinFormular");
           const dialog = document.getElementById("meinePromptBox");
           const oeffnenBtn = document.getElementById("oeffnenBtn");
@@ -62,6 +74,8 @@
           const ausgabe = document.getElementById("ausgabeText");
           var v0 = document.getElementById("nutzerEingabe");
           var derWinkel = document.getElementById("nutzerEingabe2");
+
+          let versuche = 3;
 
           inputFeld.addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
@@ -84,12 +98,13 @@
             dialog.showModal();
           });
 
-
           var g = 9.81,
             wurfweite;
           // Eingabe verarbeiten, wenn auf OK geklickt wird
           dialog.addEventListener("close", () => {
             if (dialog.returnValue === "default") {
+              versuche--;
+              console.log(versuche);
               let v0Num = parseFloat(v0.value);
               let winkelNum = parseFloat(derWinkel.value);
 
@@ -100,12 +115,42 @@
               let wurfweite = (v0Num * v0Num * Math.sin(2 * winkelRad)) / g;
               wurfweite = Math.round(wurfweite);
 
-              ausgabe.innerHTML = `<b>Wurfweite: ${wurfweite} m.</b>`;
+              if (wurfweite === 50) {
+                ausgabe.innerHTML = `<b>Treffer! Das Monster wurde getroffen!</b>`;
+                oeffnenBtn.disabled = true;
+                restartBtn.style.display = "inline-block";
+                return;
+              }
+
+              ausgabe.innerHTML = `<b>Wurfweite: ${wurfweite} m.</b><br>
+                                    Verbleibende Versuche: ${versuche}`;
+
+              if (versuche <= 0) {
+                alert("Das Monster wird Dich fressen!");
+                ausgabe.innerHTML +=
+                  "<br><b>Game Over! Das Monster hat gewonnen.</b>";
+
+                oeffnenBtn.disabled = true;
+                restartBtn.style.display = "inline-block";
+              }
             } else {
               ausgabe.textContent = "Die Eingabe wurde abgebrochen.";
             }
 
             // Felder leeren
+            v0.value = "";
+            derWinkel.value = "";
+          });
+
+          restartBtn.addEventListener("click", () => {
+            versuche = 3;
+
+            ausgabe.innerHTML =
+              "Neues Spiel gestartet. Du hast wieder 3 Versuche.";
+
+            oeffnenBtn.disabled = false;
+            restartBtn.style.display = "none";
+
             v0.value = "";
             derWinkel.value = "";
           });
