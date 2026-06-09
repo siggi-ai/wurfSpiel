@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Monstertreff</title>
-    <link rel="stylesheet" href="style.css" />
+<!--     <link rel="stylesheet" href="style.css" /> -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,15 +18,20 @@
   <body>
     <div class="site">
       <header class="box">
-        <h3>Hit It!</h3>
+        <p class="title">Monster!</p>
       </header>
 
-      <main class="box">
-        <p>
-          In 50m Entfernung steht ein Monster. Versuche es mit drei Würfen zu
-          treffen.
-        </p>
+      <p class="box">In <span id="entfernung"></span>m schläft ein Monster!</p>
+      <p class="box">Versuche es in drei Würfen zu treffen!</p>
+      <script>
+        var entfernungZumMonster = Math.random() * 90 + 10;
+        entfernungZumMonster = Math.round(entfernungZumMonster);
+        console.log(entfernungZumMonster);
 
+        document.getElementById("entfernung").innerHTML = entfernungZumMonster;
+      </script>
+
+      <main class="box">
         <!-- eingabefenster -->
         <dialog id="meinePromptBox">
           <form method="dialog" id="meinFormular">
@@ -53,16 +58,32 @@
             </div>
           </form>
         </dialog>
-        <button id="oeffnenBtn">Start</button>
-        <button id="restartBtn" style="display:none">Neustart</button>
+        <button id="oeffnenBtn">Wurf</button>
+        <button id="restartBtn" style="display: none">Neustart</button>
         <p id="ausgabeText" class="output"></p>
 
-        <img
-          src="monsters.jpg"
-          alt="a picture of a monsters in a group"
-          width="200"
-          height="200"
-        />
+        <figure>
+          <img
+            src="monsters.jpg"
+            alt="a picture of a monsters in a group"
+            width="400"
+            height="400"
+          />
+          <figcaption>
+            Illustration:
+            <a
+              href="https://pixabay.com/de/users/saydung-18713596/"
+              target="_blank"
+              >Saydaung, Piyapong
+            </a>
+            | Quelle:
+            <a
+              href="https://pixabay.com/de/illustrations/doodles-monster-kreaturen-5960094/"
+              target="_blank"
+              >pixabay</a
+            >
+          </figcaption>
+        </figure>
 
         <script>
           const restartBtn = document.getElementById("restartBtn");
@@ -115,8 +136,8 @@
               let wurfweite = (v0Num * v0Num * Math.sin(2 * winkelRad)) / g;
               wurfweite = Math.round(wurfweite);
 
-              if (wurfweite === 50) {
-                ausgabe.innerHTML = `<b>Treffer! Das Monster wurde getroffen!</b>`;
+              if (wurfweite === entfernungZumMonster) {
+                ausgabe.innerHTML = `<b>Treffer! Das Monster ist wach und hat Dich lieb!</b>`;
                 oeffnenBtn.disabled = true;
                 restartBtn.style.display = "inline-block";
                 return;
@@ -126,9 +147,9 @@
                                     Verbleibende Versuche: ${versuche}`;
 
               if (versuche <= 0) {
-                alert("Das Monster wird Dich fressen!");
+                alert("Das Monster schläft weiter!");
                 ausgabe.innerHTML +=
-                  "<br><b>Game Over! Das Monster hat gewonnen.</b>";
+                  "<br><b>Game Over! :(</b>";
 
                 oeffnenBtn.disabled = true;
                 restartBtn.style.display = "inline-block";
@@ -163,3 +184,94 @@
     </footer>
   </body>
 </html>
+
+<style>
+  html,
+body {
+  height: 100%;
+  background-color: rgb(183, 230, 176);
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+}
+.site {
+  height: auto;
+  min-height: 100%;
+}
+main {
+  padding-bottom: 20px; /* Höhe des Footers */
+}
+.output {
+  color: chocolate;
+}
+footer {
+  margin-left: -15px;
+  height: 20px;
+  margin-top: -20px; /* Höhe des Footers */
+  color: rgb(135, 0, 165);
+  background-color: rgb(67, 156, 168);
+  font-size: small;
+}
+
+.box {
+  margin-left: 10%;
+  margin-top: 4%;
+  margin-bottom: -4%;
+}
+.title {
+  font-family: "Press Start 2P", system-ui;
+  font-size: 300%;
+  /*   color: rgb(0, 55, 66); */
+  color: chocolate;
+}
+p {
+  color: rgb(77, 77, 77);
+}
+dialog {
+  border: none;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: #f9f9f9;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5); /* Hintergrund abdunkeln */
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 16px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.button-gruppe {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.simple {
+  font-family: "Press Start 2P", system-ui;
+  font-size: medium;
+}
+figure figcaption {
+  color: #555;
+  font-size: xx-small;
+}
+figure {
+  margin: 0; /* Entfernt den gesamten Standardabstand */
+  padding: 0;
+}
+</style>

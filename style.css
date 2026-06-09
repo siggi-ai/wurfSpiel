@@ -36,9 +36,10 @@ footer {
 
 .box {
   margin-left: 10%;
-  margin-top: 5%;
+  margin-top: 4%;
+  margin-bottom: -4%;
 }
-h3 {
+.title {
   font-family: "Press Start 2P", system-ui;
   font-size: 300%;
   /*   color: rgb(0, 55, 66); */
@@ -76,4 +77,12 @@ input {
 .simple {
   font-family: "Press Start 2P", system-ui;
   font-size: medium;
+}
+figure figcaption {
+  color: #555;
+  font-size: xx-small;
+}
+figure {
+  margin: 0; /* Entfernt den gesamten Standardabstand */
+  padding: 0;
 }
