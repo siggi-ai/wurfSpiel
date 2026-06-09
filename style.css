@@ -1,0 +1,79 @@
+html,
+body {
+  height: 100%;
+  background-color: powderblue;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+}
+.site {
+  height: auto;
+  min-height: 100%;
+}
+main {
+  padding-bottom: 20px; /* Höhe des Footers */
+}
+.output {
+  color: chocolate;
+}
+footer {
+  margin-left: -15px;
+  height: 20px;
+  margin-top: -20px; /* Höhe des Footers */
+  color: rgb(135, 0, 165);
+  background-color: rgb(67, 156, 168);
+  font-size: small;
+}
+
+.box {
+  margin-left: 10%;
+  margin-top: 5%;
+}
+h3 {
+  font-family: "Rye", serif;
+  font-size: 300%;
+  /*   color: rgb(0, 55, 66); */
+  color: chocolate;
+}
+p {
+  color: rgb(77, 77, 77);
+}
+dialog {
+  border: none;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: #f9f9f9;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5); /* Hintergrund abdunkeln */
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 16px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.button-gruppe {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.simple {
+  font-family: "Press Start 2P", system-ui;
+  font-size: medium;
+}
